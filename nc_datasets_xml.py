@@ -114,7 +114,7 @@ for ncfile in glob.glob(ncpath):
     datasetID = 'bcodmo'+nodeID+'v'+versDate #
     reloadEveryNMinutes = '10080'
     fileNameRegex = filename
-#    subsetVariables = 'latitude, longitude, altitude, feature_type_instance'
+    subsetVariables = 'latitude, longitude, altitude, feature_type_instance'
     infoUrl = 'http://usjgofs.whoi.edu/mzweb/smppi/doney3.html'
     cdm_timeseries_variables = subsetVariables
     # open a NetCDF CF-1.6+, DSG featureType=timeSeries file
