@@ -12,6 +12,7 @@ import glob
 import os
 import string
 from jinja2 import Environment, FileSystemLoader
+import pprint
 env = Environment(loader=FileSystemLoader('templates'))
 
 
@@ -58,8 +59,11 @@ def dvar_info(nc, dmap=None):
                     'ioos_category':'Unknown', 
                     'dataType':erddap_type, 
                     'colorBarMinimum':None, 
-                    'colorBarMaximum':None}
+                    'colorBarMaximum':None,
+                    'units':None}
         # calculate limits for all vars that are not strings
+        if nc[var].units:
+            dvars[var]['units']=nc[var].units
         if erddap_type is not 'String':
             dvars[var]['colorBarMinimum']= nc[var][:].min()
             dvars[var]['colorBarMaximum']= nc[var][:].max()
@@ -67,36 +71,38 @@ def dvar_info(nc, dmap=None):
              dvars[var]['colorBarMaximum'] = None
         if np.ma.is_masked(dvars[var]['colorBarMinimum']):
              dvars[var]['colorBarMinimum'] = None
-
+#        pprint.pprint(dvars)
+#        print(nc[var].units)
+#        sys.exit()
     # set destinationName, ioos_category, datatype and limits for coordinate variables
-    tvar = nc.get_variables_by_attributes(long_name='time')[0]
-    dvars[tvar.name] = {'destinationName':'time', 
-                'ioos_category':'Time', 
-                'dataType':dmap[tvar.dtype.name], 
-                'colorBarMinimum':None, 
-                'colorBarMaximum':None}
+   # tvar = nc.get_variables_by_attributes(long_name='time')[0]
+   # dvars[tvar.name] = {'destinationName':'time', 
+   #             'ioos_category':'Time', 
+   #             'dataType':dmap[tvar.dtype.name], 
+   #             'colorBarMinimum':None, 
+   #             'colorBarMaximum':None}
 
-    xvar = nc.get_variables_by_attributes(long_name='array of u-grid longitudes')[0]
-    dvars[xvar.name] = {'destinationName':'longitude', 
-                'ioos_category':'Location', 
-                'dataType':dmap[xvar.dtype.name], 
-                'colorBarMinimum':-180.0, 
-                'colorBarMaximum':180.0}
+   # xvar = nc.get_variables_by_attributes(long_name='array of u-grid longitudes')[0]
+   # dvars[xvar.name] = {'destinationName':'longitude', 
+   #             'ioos_category':'Location', 
+   #             'dataType':dmap[xvar.dtype.name], 
+   #             'colorBarMinimum':-180.0, 
+   #             'colorBarMaximum':180.0}
 
-    yvar = nc.get_variables_by_attributes(long_name='array of u-grid latitudes')[0]
-    dvars[yvar.name] = {'destinationName':'latitude', 
-                'ioos_category':'Location', 
-                'dataType':dmap[yvar.dtype.name], 
-                'colorBarMinimum':-90.0, 
-                'colorBarMaximum':90.0}
+   # yvar = nc.get_variables_by_attributes(long_name='array of u-grid latitudes')[0]
+   # dvars[yvar.name] = {'destinationName':'latitude', 
+   #             'ioos_category':'Location', 
+   #             'dataType':dmap[yvar.dtype.name], 
+   #             'colorBarMinimum':-90.0, 
+   #             'colorBarMaximum':90.0}
 
-    zvar = nc.get_variables_by_attributes(long_name='ocean depth at U points')[0]
-    dvars[zvar.name] = {'destinationName':'altitude', 
-                'ioos_category':'Location', 
-                'dataType':dmap[zvar.dtype.name], 
-                'colorBarMinimum':-8000.0, 
-                'colorBarMaximum':8000.0,
-                'units':'cm'}
+   # zvar = nc.get_variables_by_attributes(long_name='ocean depth at U points')[0]
+   # dvars[zvar.name] = {'destinationName':'altitude', 
+   #             'ioos_category':'Location', 
+   #             'dataType':dmap[zvar.dtype.name], 
+   #             'colorBarMinimum':-8000.0, 
+   #             'colorBarMaximum':8000.0,
+   #             'units':'cm'}
     return dvars
 
 
