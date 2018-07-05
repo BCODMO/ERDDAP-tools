@@ -117,7 +117,7 @@ for ncfile in glob.glob(ncpath):
     fileDir = path
     nodeID = '3192'
     versDate = '20051108'
-    datasetID = 'bcodmo'+nodeID+'v'+versDate #
+    datasetID = nodeID+'v'+versDate # do we start with bcodmo?
     reloadEveryNMinutes = '10080'
     fileNameRegex = filename
     subsetVariables = 'latitude, longitude, altitude, feature_type_instance'
