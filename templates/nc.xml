@@ -1,0 +1,44 @@
+<dataset type="EDDTableFromNcCFFiles" datasetID="{{ datasetID }}" active="true">
+    <reloadEveryNMinutes>{{ reloadEveryNMinutes }}</reloadEveryNMinutes>
+    <updateEveryNMillis>10000</updateEveryNMillis>
+    <fileDir>{{ fileDir }}</fileDir>
+    <fileNameRegex>{{ fileNameRegex }}</fileNameRegex>
+    <recursive>false</recursive>
+    <pathRegex>.*</pathRegex>
+    <metadataFrom>last</metadataFrom>
+    <preExtractRegex></preExtractRegex>
+    <postExtractRegex></postExtractRegex>
+    <extractRegex></extractRegex>
+    <columnNameForExtract></columnNameForExtract>
+    <sortFilesBySourceNames></sortFilesBySourceNames>
+    <fileTableInMemory>false</fileTableInMemory>
+    <accessibleViaFiles>false</accessibleViaFiles>
+    <addAttributes>
+        <att name="Conventions">CF-1.6,ACDD-1.3, COARDS</att>
+        <att name="cdm_data_type">timeSeries</att>
+        <att name="cdm_timeseries_variables">{{ cdm_timeseries_variables }}</att>
+        <att name="subsetVariables">{{ subsetVariables }}</att>
+        <att name="infoUrl">{{ infoUrl }}</att>
+        <att name="keywords">{{ keywords }}</att>
+        <att name="license">http://creativecommons.org/licenses/by/4.0/ This data set is freely available as long as one follows the terms of use (http://www.bco-dmo.org/terms-use), including the understanding that any such use will properly acknowledge the originating Investigator. It is highly recommended that anyone wishing to use portions of this data should contact the originating principal investigator (PI).</att>
+        <att name="sourceUrl">http://usjgofs.whoi.edu/mzweb/smppi/doney3.html</att>
+        <att name="standard_name_vocabulary">CF Standard Name Table v29</att>
+    </addAttributes>
+    {% for key,value in dvars.items() %}
+    <dataVariable>
+        <sourceName>{{ key }}</sourceName>
+        <destinationName>{{ value['destinationName'] }}</destinationName>
+        <dataType>{{ value['dataType'] }}</dataType>
+        <addAttributes>
+            {% if ((value['colorBarMaximum'] != None) and (value['colorBarMaximum']>value['colorBarMinimum'])) %} 
+            <att name="colorBarMaximum" type="double">{{ value['colorBarMaximum'] }}</att>
+            <att name="colorBarMinimum" type="double">{{ value['colorBarMinimum'] }}</att>
+            {% endif %}
+            <att name="ioos_category">{{ value['ioos_category'] }}</att>
+            {% if ('units' in value.keys())  %} 
+            <att name="units">{{ value['units'] }}</att>
+            {% endif %}
+        </addAttributes>
+    </dataVariable>
+    {% endfor %}
+</dataset>

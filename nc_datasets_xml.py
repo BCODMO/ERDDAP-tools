@@ -128,7 +128,7 @@ for ncfile in glob.glob(ncpath):
     keywords = ','.join(list(nc.variables))
     dvars = dvar_info(nc, dmap=dmap)
 #    if 'timeSeries' in nc.featureType:
-    template = env.get_template('timeSeries.xml')
+    template = env.get_template('nc.xml')
     ds_xml = template.render(datasetID=datasetID,
                           reloadEveryNMinutes=reloadEveryNMinutes,
                           fileDir=fileDir,
