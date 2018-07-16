@@ -128,7 +128,7 @@ for ncfile in glob.glob(ncpath):
     keywords = ','.join(list(nc.variables))
     dvars = dvar_info(nc, dmap=dmap)
 #    if 'timeSeries' in nc.featureType:
-    template = env.get_template('nc.xml')
+    template = env.get_template('EDDTableFromMultidimNcFiles.xml')
     ds_xml = template.render(datasetID=datasetID,
                           reloadEveryNMinutes=reloadEveryNMinutes,
                           fileDir=fileDir,
