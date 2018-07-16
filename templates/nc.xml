@@ -1,8 +1,9 @@
-<dataset type="EDDTableFromNcCFFiles" datasetID="{{ datasetID }}" active="true">
+<dataset type="EDDTableFromMultidimNcFiles" datasetID="{{ datasetID }}" active="true">
     <reloadEveryNMinutes>{{ reloadEveryNMinutes }}</reloadEveryNMinutes>
     <updateEveryNMillis>10000</updateEveryNMillis>
     <fileDir>{{ fileDir }}</fileDir>
     <fileNameRegex>{{ fileNameRegex }}</fileNameRegex>
+    <dimensionsCSV>time,z_t,nlat,nlon</dimensionsCSV>
     <recursive>false</recursive>
     <pathRegex>.*</pathRegex>
     <metadataFrom>last</metadataFrom>
